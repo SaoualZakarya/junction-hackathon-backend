@@ -1,11 +1,11 @@
 const express = require('express')
+
+const { createStudent } = require('../controller/studentController')
+
 const router = express.Router()
 
-
-
-
-// register user 
-router.post('/register',  )
+// create normal student 
+router.use('/student/create', createStudent )
 
 
 

@@ -33,7 +33,7 @@ app.use(morgan('dev'))
 app.use(cookieParser())
 
 // Make the cors reasable after adding to him the configuration file 
-const corsOptions = require('./config/corsOptions');
+const corsOptions = require('./config/corsOptions')
 app.use(cors(corsOptions))
 
 connectMongoDb()
@@ -41,7 +41,7 @@ connectMongoDb()
 // Routes 
 
 //Auth route
-app.use('api/user',authRoute)
+app.use('/api/auth',authRoute)
 
 
 

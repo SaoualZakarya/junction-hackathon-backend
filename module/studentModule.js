@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
+
 
 // Declare the Schema of the Mongo model
-const userSchema = new mongoose.Schema({
+const studentSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true,
@@ -21,10 +23,18 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    age:{
+        type:Number,
+        required:true
+    },
+    field:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:false
+    }
 });
 
 
-userSchema.pre('save',async function (next) {
+studentSchema.pre('save',async function (next) {
     if(!this.isModified('password')){
         return next()
     }
@@ -32,9 +42,9 @@ userSchema.pre('save',async function (next) {
     this.password = await bcrypt.hash(this.password,salt)
 })
 
-userSchema.methods.isPasswordMatched = async function (entredPassword){
+studentSchema.methods.isPasswordMatched = async function (entredPassword){
     return await bcrypt.compare(entredPassword,this.password)
 }
 
 //Export the model
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Student', studentSchema)
