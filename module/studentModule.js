@@ -1,13 +1,20 @@
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 
+const {genPassword, validatePassword} = require('../utils/passwordUtils');
+
+
 
 // Declare the Schema of the Mongo model
 const studentSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true,
-        unique:true
+    },
+    userName:{
+        type:String,
+        required:true,
+        unique: true
     },
     email:{
         type:String,
@@ -19,9 +26,13 @@ const studentSchema = new mongoose.Schema({
         required:true,
         unique:true,
     },
-    password:{
+    hash:{
         type:String,
         required:true,
+    },
+    salt: {
+        type:String,
+        required: true
     },
     age:{
         type:Number,
@@ -34,17 +45,21 @@ const studentSchema = new mongoose.Schema({
 });
 
 
-studentSchema.pre('save',async function (next) {
-    if(!this.isModified('password')){
-        return next()
-    }
-    const salt = await bcrypt.genSaltSync(10)
-    this.password = await bcrypt.hash(this.password,salt)
-})
+// studentSchema.pre('save',async function (next) {
+//     if(!this.isModified('password')){
+//         return next()
+//     }
 
-studentSchema.methods.isPasswordMatched = async function (entredPassword){
-    return await bcrypt.compare(entredPassword,this.password)
-}
+//     const secret = genPassword(this.password)
+
+//     this.hash = secret.hash;
+//     this.salt = secret.salt;
+// })
+
+// studentSchema.methods.isPasswordMatched = async function (entredPassword){
+//     return validatePassword(entredPassword, this.hash, this.salt)
+//     // return await bcrypt.compare(entredPassword,this.password)
+// }
 
 //Export the model
 module.exports = mongoose.model('Student', studentSchema)
