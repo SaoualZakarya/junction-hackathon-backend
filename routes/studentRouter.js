@@ -42,10 +42,8 @@ router.get('/login/student', passport.authenticate('student', {
     name: req.user.name,
     username: req.user.username,
     email: req.user.email,
-    // info: req.user.email,
-    // profilePic: req.user.profilePic,
-    // info: req.user.info,
-    // order_history: req.user.order_history
+    mobile: req.user.mobile,
+    age: req.user.age
   }
 
   res.status(200).json(user);
