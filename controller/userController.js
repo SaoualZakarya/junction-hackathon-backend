@@ -1,4 +1,4 @@
-const User = require('../model/customModel')
+const User = require('../model/userModel')
 const { genPassword } = require('../utils/passwordUtils')
 
 const createUser =  async (req, res, next) => {
@@ -27,16 +27,15 @@ const createUser =  async (req, res, next) => {
 }
 
 const loginUser = async (req, res) => {
-    
+    console.log('we are in login user controller')
     const user = {
-      id: req.user.id,
-      name: req.user.name,
-      username: req.user.username,
-      email: req.user.email,
-      mobile: req.user.mobile,
-      age: req.user.age
+      id: req.user?.id,
+      userName: req.user?.userName,
+      email: req.user?.email,
+      mobile: req.user?.mobile,
+      accountType:req.user?.accountType
     }
-  
+    
     res.status(200).json(user);
   }
 

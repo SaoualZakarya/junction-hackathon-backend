@@ -5,7 +5,7 @@ const MongoStorage = require("connect-mongo");
 const passport = require("passport");
 
 // Middleware for enabling Cross-Origin Resource Sharing (CORS), allowing the server to handle requests from different origins.
-// const cors = require('cors');
+const cors = require('cors');
 
 // Middleware for parsing cookies attached to incoming requests, making it easier to handle and manipulate cookies.
 const cookieParser = require('cookie-parser')
@@ -26,9 +26,10 @@ dotenv.config()
 const connectMongoDb = require('./config/connectMongoDb');
 
 const app = express()
+app.use(cors()) 
 
 // Middleware to parse JSON-encoded request bodies, allowing the server to handle JSON data sent in the request body.
-app.use(express.json()) 
+app.use(express.json())
 
 // Middleware to parse URL-encoded request bodies, which is common for form submissions on web pages.
 app.use(express.urlencoded({extended:false})) 

@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 
 // Declare the Schema of the Mongo model
 const userSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-    },
     userName:{
         type:String,
         required:true,
@@ -28,13 +24,9 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    age:{
-        type:Number,
-        required:true
-    },
     pending:{
         type:String,
-        enum:['peding','accepted'],
+        enum:['pending','accepted'],
         default:'pending'
     },
     accountType:{
