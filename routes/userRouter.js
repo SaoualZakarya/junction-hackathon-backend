@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const passport = require('passport');
-const { createUser,loginUser, logoutUser } = require('../controller/userController');
+const { createUser,loginUser, logoutUser,getUsersRank } = require('../controller/userController');
 
 
 const router = Router();
@@ -12,7 +12,9 @@ router.post('/login/user', passport.authenticate('local', {
     failureMessage: true
 }), loginUser)
 
-router.delete('/sign_out/:id',logoutUser)
+router.get('/users-rank',getUsersRank)
+
+router.delete('/sign_out',logoutUser)
 
 module.exports = router;
 

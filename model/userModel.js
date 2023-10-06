@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
         enum:['pending','accepted'],
         default:'pending'
     },
+    point:{
+        type:Number,
+        default:0
+    },
     accountType:{
         type:String,
         enum:['adult',"child"],
@@ -42,7 +46,8 @@ const userSchema = new mongoose.Schema({
     field:{
         type:mongoose.Schema.Types.ObjectId,
         required:false
-    }
+    },
+    
 });
 
 //Export the model

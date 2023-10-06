@@ -41,6 +41,7 @@ const loginUser = async (req, res) => {
       mobile: req.user?.mobile,
       accountType:req.user?.accountType,
       role:req.user?.role,
+      point:req.user?.point
     }
     
     res.status(200).json(user);
@@ -49,13 +50,25 @@ const loginUser = async (req, res) => {
 const logoutUser = async (req,res) => {
   try{
     req.logout(function(err) {
-      if (err) { return next(err); }
+      if (err) { return next(err) }
     });
     res.status(200).json({ message: 'User logged out successfully.' });
   }catch(err){
     throw new Error(err)
   }
 }
-module.exports = {createUser,loginUser,logoutUser}
+
+const getUsersRank = async (req,res)=>{
+  try {
+    const getUsers = await User.find({ role: "student" }).select("_id userName point")
+    .sort({ point: -1 }) 
+    .limit(6);
+  res.json(getUsers);
+  } catch (error) {
+    throw new Error(err)
+  }
+}
+
+module.exports = {createUser,loginUser,logoutUser,getUsersRank }
 
 
