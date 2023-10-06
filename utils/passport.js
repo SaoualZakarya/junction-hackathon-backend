@@ -1,18 +1,17 @@
-/** @format */
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
-const Student = require("../module/studentModule");
+const User = require("../module/customModule");
 const { validatePassword } = require("./passwordUtils");
 
 
 // client authentication
-passport.use( "student",
+passport.use( "user",
     new LocalStrategy({
         usernameField: "userName"
     }, async (username, password, done) => {
-        const resultUser = await Student.findOne({
+        const resultUser = await User.findOne({
             $or: [{ username: username }, { email: username }],
         });
 
@@ -60,7 +59,6 @@ passport.use('admin-local',
                     )
                 }
 
-
                 return done(
                     { message: "Please Confirm Your Email" },
                     false,
@@ -68,7 +66,7 @@ passport.use('admin-local',
                 );
             }
 
-            if(!resultUser.isAdmin)
+            if(!resultUser.role ==="admin")
                 return done({message: "You Dont have access"}, false, "You Dont have access");
 
             return done(null, resultUser);

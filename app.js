@@ -1,12 +1,11 @@
 const express = require('express')
 
 const session = require("express-session");
-const mongoose = require('mongoose');
 const MongoStorage = require("connect-mongo");
 const passport = require("passport");
 
 // Middleware for enabling Cross-Origin Resource Sharing (CORS), allowing the server to handle requests from different origins.
-const cors = require('cors');
+// const cors = require('cors');
 
 // Middleware for parsing cookies attached to incoming requests, making it easier to handle and manipulate cookies.
 const cookieParser = require('cookie-parser')
@@ -15,7 +14,9 @@ const cookieParser = require('cookie-parser')
 const morgan = require('morgan');
 
 const errorHandling = require('./middleware/errorHandling')
-const authRoute = require('./routes/studentRouter')
+const authRoute = require('./routes/userRouter')
+const upload = require('./routes/uploadImageRouter')
+const courseRouter = require('./routes/courseRouter')
 // Dotenv is used to load environment variables from a .env file into process.env. 
 const dotenv = require('dotenv')
 dotenv.config()
@@ -35,7 +36,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(morgan('dev'))
 
 // Using the cookieParser middleware to parse cookies from incoming requests, making them accessible in the request object.
-// app.use(cookieParser())
+app.use(cookieParser())
 
 
 
@@ -51,9 +52,6 @@ app.use(session({
     cookie:
     {
         maxAge: 1000 * 60 * 60 * 24 * 30,
-        // httpOnly: true,
-        // secure: true,
-        // sameSite: "none",
     }
 }));
 
@@ -62,11 +60,6 @@ require('./utils/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// Make the cors reasable after adding to him the configuration file 
-// const corsOptions = require('./config/corsOptions')
-// app.use(cors(corsOptions))
-
 connectMongoDb()
 
 // Routes 
@@ -74,15 +67,11 @@ connectMongoDb()
 //Auth route
 app.use('/api/auth',authRoute)
 
+// Upload image
+app.use('/api/upload',upload)
 
-
-
-// app.get('/', (req, res, next) => {
-//     console.log("hello");
-//     res.sendStatus(200)
-// })
-
-
+// courses route
+app.use('/api/course',courseRouter)  
 
 // Custom middleware to handle requests for routes that do not exist, returning a 404 Not Found response.
 app.use(errorHandling.notFound)
