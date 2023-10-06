@@ -2,7 +2,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
-const User = require("../module/customModule");
+const User = require("../model/customModel");
 const { validatePassword } = require("./passwordUtils");
 
 

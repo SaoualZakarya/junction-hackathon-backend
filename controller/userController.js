@@ -1,4 +1,4 @@
-const User = require('../module/customModule')
+const User = require('../model/customModel')
 const { genPassword } = require('../utils/passwordUtils')
 
 const createUser =  async (req, res, next) => {

@@ -1,4 +1,4 @@
-const Course = require('../module/courseModule')
+const Course = require('../model/courseModel')
 const asyncHandler = require('express-async-handler')
 
 const createCourse = asyncHandler(async(req,res)=>{
@@ -13,6 +13,10 @@ const createCourse = asyncHandler(async(req,res)=>{
 const updateCourse = asyncHandler(async(req,res)=>{
     const {id} = req.params
     try {
+        const findTeacher = await Course.findById(id)
+        if(req.user._id !== findTeacher._id ){
+            throw new Error('You can\'t delete this task')
+        }
         const updateTheOldCourse = await Course.findByIdAndUpdate(id,{
         title:req.body.title,
         description:req.body.description,
@@ -28,6 +32,10 @@ const updateCourse = asyncHandler(async(req,res)=>{
 const deleteCourse = asyncHandler(async(req,res)=>{
     const {id} = req.params
     try {
+        const findTeacher = await Course.findById(id)
+        if(req.user._id !== findTeacher._id ){
+            throw new Error('You can\'t delete this task')
+        }
         const deleteTheCourse = await Course.findByIdAndDelete(id
         ,{new:true})
         res.json(deleteTheCourse)

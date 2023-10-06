@@ -1,12 +1,12 @@
 const { createCourse, getCourse, getAllCourses, updateCourse, deleteCourse } = require('../controller/courseController')
-
+const {isTeacher} = require('../middleware/checkLogin')
 const router = require('express').Router()
 
-router.post('/create',createCourse)
 router.get('/all',getAllCourses)
 router.get('/:id',getCourse)
-router.put('/:id',updateCourse)
-router.delete('/:id',deleteCourse)
+router.post('/create',isTeacher,createCourse)
+router.put('/:id',isTeacher,updateCourse)
+router.delete('/:id',isTeacher,deleteCourse)
 
 
 

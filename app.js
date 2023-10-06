@@ -17,6 +17,7 @@ const errorHandling = require('./middleware/errorHandling')
 const authRoute = require('./routes/userRouter')
 const upload = require('./routes/uploadImageRouter')
 const courseRouter = require('./routes/courseRouter')
+const challengeRouter = require('./routes/challengeRouter')
 // Dotenv is used to load environment variables from a .env file into process.env. 
 const dotenv = require('dotenv')
 dotenv.config()
@@ -72,6 +73,9 @@ app.use('/api/upload',upload)
 
 // courses route
 app.use('/api/course',courseRouter)  
+
+// challenge route
+app.use('/api/challenge',challengeRouter)  
 
 // Custom middleware to handle requests for routes that do not exist, returning a 404 Not Found response.
 app.use(errorHandling.notFound)
