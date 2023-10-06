@@ -14,10 +14,14 @@ const cookieParser = require('cookie-parser')
 const morgan = require('morgan');
 
 const errorHandling = require('./middleware/errorHandling')
+
 const authRoute = require('./routes/userRouter')
-const upload = require('./routes/uploadImageRouter')
+const forumRouter = require('./routes/forumRouter');
 const courseRouter = require('./routes/courseRouter')
 const challengeRouter = require('./routes/challengeRouter')
+
+const upload = require('./routes/uploadImageRouter')
+
 // Dotenv is used to load environment variables from a .env file into process.env. 
 const dotenv = require('dotenv')
 dotenv.config()
