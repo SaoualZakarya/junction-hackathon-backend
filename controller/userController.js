@@ -27,16 +27,26 @@ const createUser =  async (req, res, next) => {
 }
 
 const loginUser = async (req, res) => {
-    console.log('we are in login user controller')
     const user = {
       id: req.user?.id,
       userName: req.user?.userName,
       email: req.user?.email,
       mobile: req.user?.mobile,
-      accountType:req.user?.accountType
+      accountType:req.user?.accountType,
+      role:req.user?.role,
     }
     
     res.status(200).json(user);
   }
 
-module.exports = {createUser,loginUser}
+const logoutUser = async (req,res) => {
+  try{
+    req.logout(function(err) {
+      if (err) { return next(err); }
+    });
+    res.status(200).json({ message: 'User logged out successfully.' });
+  }catch(err){
+    throw new Error(err)
+  }
+}
+module.exports = {createUser,loginUser,logoutUser}

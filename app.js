@@ -24,9 +24,11 @@ dotenv.config()
 
 // Connect to the database 
 const connectMongoDb = require('./config/connectMongoDb');
+const { connect } = require('mongoose');
+const corsOptions = require('./config/corsOptions');
 
 const app = express()
-app.use(cors()) 
+app.use(cors(corsOptions)) 
 
 // Middleware to parse JSON-encoded request bodies, allowing the server to handle JSON data sent in the request body.
 app.use(express.json())
