@@ -5,15 +5,16 @@ const LocalStrategy = require("passport-local");
 const User = require("../model/userModel");
 const { validatePassword } = require("./passwordUtils");
 
-passport.use("user", new LocalStrategy({
+passport.use(new LocalStrategy({
     usernameField: "userName"
 }, async (userName, password, done) => {
     try {
-        console.log(userName,password)
+        // console.log(userName,password)
         const resultUser = await User.findOne({
             $or: [{ userName: userName }, { email: userName }],
         });
-        console.log(resultUser)
+        //TODO :: MAKE ERROR HENDLING
+        // console.log(resultUser)
 
         if (!resultUser) {
             return done(null, false, { message: "Invalid Username or Email" });
