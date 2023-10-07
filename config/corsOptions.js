@@ -1,5 +1,5 @@
 const corsOptions = {
-    origin: 'https://key-box-elearn.vercel.app/',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     headers: ['Authorization'],
   }
