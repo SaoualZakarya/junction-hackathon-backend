@@ -1,5 +1,5 @@
 const corsOptions = {
-    origin: 'https://junction-hackathon-backend.vercel.app',
+    origin: 'https://key-box-elearn.vercel.app/',
     optionsSuccessStatus: 200 
 }
 module.exports = corsOptions
