@@ -15,10 +15,12 @@ const morgan = require('morgan');
 
 const errorHandling = require('./middleware/errorHandling')
 
+
 const authRoute = require('./routes/userRouter')
 const forumRouter = require('./routes/forumRouter');
 const courseRouter = require('./routes/courseRouter')
 const challengeRouter = require('./routes/challengeRouter')
+const opinionRouter =require('./routes/opinionRoute')
 
 const upload = require('./routes/uploadImageRouter')
 
@@ -28,9 +30,9 @@ dotenv.config()
 
 // Connect to the database 
 const connectMongoDb = require('./config/connectMongoDb');
-const { connect } = require('mongoose');
 const corsOptions = require('./config/corsOptions');
 
+const path = require('path');
 const app = express()
 app.use(cors(corsOptions)) 
 
@@ -39,6 +41,9 @@ app.use(express.json())
 
 // Middleware to parse URL-encoded request bodies, which is common for form submissions on web pages.
 app.use(express.urlencoded({extended:false})) 
+
+// To make the image accessible from the browser
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuring Morgan to log HTTP requests in the 'dev' format
 app.use(morgan('dev'))
@@ -83,6 +88,9 @@ app.use('/api/course',courseRouter)
 
 // challenge route
 app.use('/api/challenge',challengeRouter)  
+
+// opinion route
+app.use('/api/opinion',opinionRouter) 
 
 // Custom middleware to handle requests for routes that do not exist, returning a 404 Not Found response.
 app.use(errorHandling.notFound)

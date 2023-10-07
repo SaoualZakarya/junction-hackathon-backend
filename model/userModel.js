@@ -47,6 +47,12 @@ const userSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:false
     },
+    opinion:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Opinion'
+        }
+    ]
     
 });
 

@@ -33,6 +33,26 @@ const createUser = async (req, res, next) => {
 
 }
 
+const getSingleUser =async (req,res)=>{
+  const {id} = req.params
+  try{
+    const singleUser = await User.findById(id).populate({
+      path: 'opinion',
+      populate: {
+          path: 'writer',
+          select:{
+            _id : true ,
+            userName:true,
+          }
+      },
+      
+  });
+    res.json(singleUser)
+  }catch(err){
+    throw new Error(err)
+  }    
+}
+
 const loginUser = async (req, res) => {
     const user = {
       id: req.user?.id,
@@ -69,6 +89,6 @@ const getUsersRank = async (req,res)=>{
   }
 }
 
-module.exports = {createUser,loginUser,logoutUser,getUsersRank }
+module.exports = {createUser,loginUser,logoutUser,getUsersRank,getSingleUser }
 
 
