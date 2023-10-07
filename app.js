@@ -34,7 +34,11 @@ const corsOptions = require('./config/corsOptions');
 
 const path = require('path');
 const app = express()
-app.use(cors()) 
+const corsOptions = {
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+}
+app.use(cors(corsOptions)) 
 
 // Middleware to parse JSON-encoded request bodies, allowing the server to handle JSON data sent in the request body.
 app.use(express.json())
